@@ -34,6 +34,19 @@ class Register
     puts "the card #{hs_sess.uid} signed in at #{hs_sess.current_time}"
   end
 
+  def create_user(url, carduid, emailaddress)
+    options = {
+      body:  {
+        uid: carduid,
+        email: emailaddress
+      }.to_json,
+      headers: {
+        'Content-Type' => 'application/json'
+      }
+    }
+    @result = HTTParty.post(url.to_s, options)
+  end
+
   def read_serial
     puts "Monitoring on #{@port}"
     @sp = SerialPort.new(@port, @params)
@@ -44,8 +57,7 @@ class Register
       end
     end
   end
-
 end
+
 register = Register.new
 register.read_serial
-#register.login('FFFFFF', Time.now.getutc)
