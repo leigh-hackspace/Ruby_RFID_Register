@@ -10,7 +10,9 @@
 
 #define RST_PIN         5
 #define SS_PIN          10
-int LEDPos = 3;
+int LEDRed = 3;
+int LEDGreen =4;
+int Speaker = 7;
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);   // Create MFRC522 instance.
 
@@ -46,15 +48,18 @@ void loop() {
     Serial.print(F("{\"CardUID\":\""));
     dump_byte_array(mfrc522.uid.uidByte, mfrc522.uid.size);
     Serial.println("\"}");
-    analogWrite(LEDPos,1000);
+    analogWrite(LEDRed,1000);
+	analogWrite(Speaker,500);
     delay(500);
-    analogWrite(LEDPos,0);
+    analogWrite(LEDRed,0);
+	analogwrute(Speaker,0);
     // Check for compatibility
         return;
     // Halt PICC
     mfrc522.PICC_HaltA();
     // Stop encryption on PCD
     mfrc522.PCD_StopCrypto1();
+	delay(3000);
 }
 
 /**
