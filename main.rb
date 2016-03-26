@@ -31,23 +31,10 @@ class Register
     hs_sess = HsSession.new(carduid, time)
     result =  hs_sess.post(@location, @api_key)
     'error' unless result['message'] == 'OK'
-    puts "the card #{hs_sess.uid} signed in at #{hs_sess.current_time}"
-  end
-
-  def create_user(url, carduid, emailaddress)
-    options = {
-      body:  {
-        uid: carduid,
-        email: emailaddress
-      }.to_json,
-      headers: {
-        'Content-Type' => 'application/json'
-      }
-    }
-    @result = HTTParty.post(url.to_s, options)
   end
 
   def read_serial
+    puts 'Hackspace RFID Register'
     puts "Monitoring on #{@port}"
     @sp = SerialPort.new(@port, @params)
     @sp.read_timeout = 200
