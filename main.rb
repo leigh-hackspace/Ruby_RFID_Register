@@ -41,10 +41,7 @@ class Register
     @sp.read_timeout = 200
     loop do
       while (i = @sp.gets) do
-	time = Time.now.getlocal
-        if @bst 
-          time = Time.now.getlocal("+01:00")
-	end
+        time = Time.now.getlocal("+01:00")
         login(JSON.parse(i)['CardUID'], time)
 	puts  "debug info:CardUID:#{JSON.parse(i)['CardUID']}\n"
       end
