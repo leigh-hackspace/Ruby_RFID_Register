@@ -15,6 +15,7 @@ class Register
     @api_key = config['api_key']
     @port = config['com_port']
     @location = config['base_url'] + config['api_path']
+    @bst = config['bst']	
     init_serial_params
   end
 
@@ -40,11 +41,17 @@ class Register
     @sp.read_timeout = 200
     loop do
       while (i = @sp.gets) do
-        login(JSON.parse(i)['CardUID'], Time.now.getutc)
+	time = Time.now.getlocal
+        if @bst 
+          time = Time.now.getlocal("+01:00")
+	end
+        login(JSON.parse(i)['CardUID'], time)
+	puts  "debug info:CardUID:#{JSON.parse(i)['CardUID']}\n"
       end
     end
   end
 end
 
 register = Register.new
+puts "the time is: #{Time.now.getlocal("+01:00")}"
 register.read_serial
