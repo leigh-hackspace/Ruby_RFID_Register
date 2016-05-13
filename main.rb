@@ -15,7 +15,6 @@ class Register
     @api_key = config['api_key']
     @port = config['com_port']
     @location = config['base_url'] + config['api_path']
-    @bst = config['bst']	
     init_serial_params
   end
 
@@ -28,8 +27,8 @@ class Register
     }
   end
 
-  def login(carduid, time)
-    hs_sess = HsSession.new(carduid, time)
+  def login(carduid)
+    hs_sess = HsSession.new(carduid)
     result =  hs_sess.post(@location, @api_key)
     'error' unless result['message'] == 'OK'
   end
@@ -42,7 +41,7 @@ class Register
     loop do
       while (i = @sp.gets) do
         time = Time.now.getlocal("+01:00")
-        login(JSON.parse(i)['CardUID'], time)
+        login(JSON.parse(i)['CardUID'])
 	puts  "debug info:CardUID:#{JSON.parse(i)['CardUID']}\n"
       end
     end
