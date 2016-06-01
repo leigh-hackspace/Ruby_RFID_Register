@@ -52,14 +52,14 @@ void loop() {
 	analogWrite(Speaker,500);
     delay(500);
     analogWrite(LEDRed,0);
-	analogwrute(Speaker,0);
+	analogwrite(Speaker,0);
     // Check for compatibility
         return;
     // Halt PICC
     mfrc522.PICC_HaltA();
     // Stop encryption on PCD
     mfrc522.PCD_StopCrypto1();
-	delay(3000);
+	delay(6000);
 }
 
 /**
