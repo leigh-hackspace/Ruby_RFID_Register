@@ -26,6 +26,4 @@ end
 
 register = Register.new
 
-ARGV.each do |card|
-  register.login(card)
-end
+ARGV.each {|card|register.login(card)}
